@@ -1,17 +1,18 @@
 package ru.yandex.practicum.delivery;
 
-
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class DeliveryApp {
     private static final Scanner scanner = new Scanner(System.in);
-    private static final ArrayList<Parcel> allParcels = new ArrayList<>();
-    private static final ArrayList<Trackable> trackableItems = new ArrayList<>();
+    private static final List<Parcel> allParcels = new ArrayList<>();
+    private static final List<Trackable> trackableItems = new ArrayList<>();
 
-    private static final ParcelBox<StandardParcel> standardBox = new ParcelBox<>(100);
-    private static final ParcelBox<FragileParcel> fragileBox = new ParcelBox<>(100);
-    private static final ParcelBox<PerishableParcel> perishableBox = new ParcelBox<>(100);
+    private static final int MAX_BOX_WEIGHT = 100;
+    private static final ParcelBox<StandardParcel> standardBox = new ParcelBox<>(MAX_BOX_WEIGHT);
+    private static final ParcelBox<FragileParcel> fragileBox = new ParcelBox<>(MAX_BOX_WEIGHT);
+    private static final ParcelBox<PerishableParcel> perishableBox = new ParcelBox<>(MAX_BOX_WEIGHT);
 
     public static void main(String[] args) {
         boolean running = true;
@@ -137,12 +138,10 @@ public class DeliveryApp {
             case 3:
                 printParcelDescriptions(perishableBox.getAllParcels());
                 break;
-            default:
-                System.out.println("Неверный тип коробки.");
         }
     }
 
-    private static <T extends Parcel> void printParcelDescriptions(ArrayList<T> parcels) {
+    private static void printParcelDescriptions(List<? extends  Parcel> parcels) {
         if (parcels.isEmpty()) {
             System.out.println("Коробка пуста.");
             return;
@@ -154,7 +153,17 @@ public class DeliveryApp {
     }
 
     private static int readInt() {
-        return Integer.parseInt(scanner.nextLine());
+        while (true) {
+            String input = scanner.nextLine();
+
+            try {
+                return Integer.parseInt(input);
+            } catch (NumberFormatException exception) {
+                System.out.println(
+                        "Некорректный ввод. Введите целое число:"
+                );
+            }
+        }
     }
 }
 

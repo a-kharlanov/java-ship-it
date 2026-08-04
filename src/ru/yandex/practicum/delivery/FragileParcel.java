@@ -9,7 +9,7 @@ public class FragileParcel extends Parcel implements Trackable {
 
     @Override
     public void packageItem() {
-        System.out.println("Посылка <<" + getDescription() + ">> обёрнута в защитную плёнку");
+        System.out.println("Посылка <<" + description + ">> обёрнута в защитную плёнку");
         super.packageItem();
     }
 
@@ -20,7 +20,7 @@ public class FragileParcel extends Parcel implements Trackable {
 
     @Override
     public void reportStatus(String newLocation) {
-        System.out.println("Хрупкая посылка <<" + getDescription()
+        System.out.println("Хрупкая посылка <<" + description
                 + ">> изменила местоположение на " + newLocation);
     }
 }
